@@ -1,0 +1,16 @@
+@model Doctor
+
+@{
+    ViewData["Title"] = "Appointment Confirmed";
+}
+
+<h2>Appointment Confirmed</h2>
+
+<div class="alert alert-success">
+    <p><strong>Patient:</strong> @ViewBag.PatientName</p>
+    <p><strong>Doctor:</strong> @Model.DoctorName (@Model.Specialization)</p>
+    <p><strong>Date:</strong> @(((DateTime)ViewBag.AppointmentDate).ToString("dd MMM yyyy"))</p>
+    <p><strong>Total Charge:</strong> ₹@Model.CalculateTotalCharge()</p>
+</div>
+
+<a asp-action="Index" class="btn btn-primary">Back to Doctors</a>

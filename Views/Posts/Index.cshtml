@@ -1,0 +1,30 @@
+@model List<Post>
+
+@{
+    ViewData["Title"] = "Posts";
+}
+
+<h2>Posts</h2>
+
+@if (ViewBag.Error != null)
+{
+    <div class="alert alert-danger">@ViewBag.Error</div>
+}
+
+<table class="table table-bordered table-striped">
+    <thead>
+        <tr>
+            <th>Post ID</th>
+            <th>Title</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var post in Model)
+        {
+            <tr>
+                <td>@post.Id</td>
+                <td>@post.Title</td>
+            </tr>
+        }
+    </tbody>
+</table>

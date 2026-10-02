@@ -1,0 +1,66 @@
+@model List<Doctor>
+
+@{
+    ViewData["Title"] = "Doctors";
+}
+
+<h2>Doctor List</h2>
+
+@if (ViewBag.PatientName != null)
+{
+    <div class="alert alert-info">Welcome, <strong>@ViewBag.PatientName</strong></div>
+}
+
+<form asp-action="SetPatientName" method="post" class="row g-2 mb-3">
+    <div class="col-auto">
+        <input type="text" name="patientName" class="form-control" placeholder="Enter patient name" />
+    </div>
+    <div class="col-auto">
+        <button type="submit" class="btn btn-primary">Save Name (Cookie)</button>
+    </div>
+</form>
+
+<form asp-action="SelectSpecialization" method="post" class="row g-2 mb-3">
+    <div class="col-auto">
+        <select name="specialization" class="form-select">
+            <option value="">All Specializations</option>
+            @foreach (var s in (List<string>)ViewBag.Specializations)
+            {
+                <option value="@s" selected="@(s == (string?)ViewBag.SelectedSpecialization)">@s</option>
+            }
+        </select>
+    </div>
+    <div class="col-auto">
+        <button type="submit" class="btn btn-secondary">Filter (Session)</button>
+    </div>
+</form>
+
+<table class="table table-bordered">
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Name</th>
+            <th>Specialization</th>
+            <th>Experience (Years)</th>
+            <th>Consultation Fee</th>
+            <th>Total Charge (with ₹100 service charge)</th>
+            <th>Action</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var doctor in Model)
+        {
+            <tr>
+                <td>@doctor.DoctorId</td>
+                <td>@doctor.DoctorName</td>
+                <td>@doctor.Specialization</td>
+                <td>@doctor.Experience</td>
+                <td>₹@doctor.ConsultationFee</td>
+                <td>₹@doctor.CalculateTotalCharge()</td>
+                <td>
+                <a asp-action="Details" asp-route-doctorId="@doctor.DoctorId" class="btn btn-sm btn-success">Details</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
